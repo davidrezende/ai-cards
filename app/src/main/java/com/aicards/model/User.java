@@ -7,8 +7,6 @@ import java.util.UUID;
 
 public class User {
 
-    @Id
-    private UUID id;
     private String nome;
     private String sobrenome;
     private String idade;
