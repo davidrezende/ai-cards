@@ -1,0 +1,4 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://${USER_MONGO_DB}:${PASSWORD_MONGO_DB}@brazukacluster.a9fuvuf.mongodb.net/aicards
