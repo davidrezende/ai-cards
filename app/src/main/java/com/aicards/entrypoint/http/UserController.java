@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1/user")
-public class TestController {
+public class UserController {
 
     @Autowired
     private UserRepository repository;
