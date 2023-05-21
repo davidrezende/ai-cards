@@ -21,4 +21,52 @@ public class Card {
         this.attributes = attributes;
         this.userId = userId;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCardHash() {
+        return cardHash;
+    }
+
+    public void setCardHash(String cardHash) {
+        this.cardHash = cardHash;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Map<AttributesEnum, Integer> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(Map<AttributesEnum, Integer> attributes) {
+        this.attributes = attributes;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }

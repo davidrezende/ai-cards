@@ -7,10 +7,7 @@ import com.aicards.dataprovider.repository.CardRepository;
 import com.aicards.dataprovider.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -22,23 +19,19 @@ public class CardController {
     private CardRepository repository;
 
     @GetMapping("/{userId}")
-    public List<Card> findUserById(String userId){
-        return repository.findByUserId(userId);
+    public List<Card> findUserById(@PathVariable String userId){
+        return repository.findAllByUserId(userId);
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     public Card add(){
         Map<AttributesEnum, Integer> attributes = new HashMap<>();
         Random random = new Random();
         for (AttributesEnum attribute : AttributesEnum.values()){
             attributes.put(attribute, random.nextInt(0,100));
         }
-
         Card carta = new Card("Carta", UUID.randomUUID().toString(), "É uma carta", attributes, UUID.randomUUID().toString());
-
-        repository.save(carta);
-
-        return carta;
+        return repository.save(carta);
     }
 
 }
