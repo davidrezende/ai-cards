@@ -1,4 +1,4 @@
-package com.aicards.model;
+package com.aicards.dataprovider.model;
 
 
 import org.springframework.data.annotation.Id;

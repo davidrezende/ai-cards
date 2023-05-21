@@ -1,6 +1,6 @@
-package com.aicards.repository;
+package com.aicards.dataprovider.repository;
 
-import com.aicards.model.User;
+import com.aicards.dataprovider.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
