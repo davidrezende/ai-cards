@@ -3,10 +3,9 @@ package com.aicards.entrypoint.http;
 import com.aicards.dataprovider.model.User;
 import com.aicards.dataprovider.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/user")
@@ -16,14 +15,14 @@ public class UserController {
     private UserRepository repository;
 
     @GetMapping("/{userId}")
-    public String findUserById(){
-        repository.save(new User("DAVID", "LUCAS", "19"));
+    public String findUserById(@PathVariable String userId){
+        repository.findByUserId(userId);
         return "OK";
     }
 
     @PostMapping
     public User add(){
-        return repository.save(new User("DAVID", "LUCAS", "1999"));
+        return repository.save(new User("DAVID", "LUCAS", "1999", UUID.randomUUID().toString()));
     }
 
 }
