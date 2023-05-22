@@ -1,4 +1,4 @@
-package com.aicards.dataprovider.model;
+package com.aicards.entity;
 
 public enum AttributesEnum {
     FORCA(1),

@@ -1,17 +1,15 @@
-package com.aicards.entity;
+package com.aicards.entity.vo;
 
-public class UserEntity {
+public class SaveUserRequest {
 
     private String nome;
     private String sobrenome;
     private String idade;
-    private String userId;
 
-    public UserEntity(String nome, String sobrenome, String idade, String userId) {
+    public SaveUserRequest(String nome, String sobrenome, String idade) {
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.idade = idade;
-        this.userId = userId;
     }
 
     public String getNome() {
@@ -36,13 +34,5 @@ public class UserEntity {
 
     public void setIdade(String idade) {
         this.idade = idade;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 }

@@ -1,9 +1,7 @@
 package com.aicards.dataprovider.model;
 
 
-import org.springframework.data.annotation.Id;
-
-import java.util.UUID;
+import com.aicards.entity.UserEntity;
 
 public class User {
 
@@ -17,6 +15,9 @@ public class User {
         this.sobrenome = sobrenome;
         this.idade = idade;
         this.userId = userId;
+    }
+
+    public User(){
     }
 
     public String getNome() {
@@ -49,5 +50,23 @@ public class User {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public UserEntity toEntity(){
+        return new UserEntity(
+                this.nome,
+                this.sobrenome,
+                this.idade,
+                this.userId
+        );
+    }
+
+    public User toUser(UserEntity entity){
+        return new User(
+                entity.getNome(),
+                entity.getSobrenome(),
+                entity.getIdade(),
+                entity.getUserId()
+        );
     }
 }
