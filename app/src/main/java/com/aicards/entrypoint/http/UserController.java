@@ -22,9 +22,8 @@ public class UserController {
     }
 
     @PostMapping
-    public String add(){
-        repository.save(new User("DAVID", "LUCAS", "19"));
-        return "OK";
+    public User add(){
+        return repository.save(new User("DAVID", "LUCAS", "1999"));
     }
 
 }
