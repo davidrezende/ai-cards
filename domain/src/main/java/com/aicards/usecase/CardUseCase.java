@@ -6,6 +6,7 @@ import com.aicards.entity.CardEntity;
 import com.aicards.entity.UserEntity;
 import com.aicards.entity.vo.AttributesEnum;
 import com.aicards.entity.vo.CreateCardRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -28,7 +29,7 @@ public class CardUseCase {
         return cardDataProvider.findAllCardsByUserId(userId);
     }
 
-    public CardEntity saveCard(CreateCardRequest cardRequest) {
+    public CardEntity saveCard(CreateCardRequest cardRequest) throws JsonProcessingException {
         String descriptionGPT = openAIClient.callOpenAI(cardRequest.getPrompt());
         UserEntity userEntity = userUseCase.findUserByUserId(cardRequest.getUserId());
         Map<AttributesEnum, Integer> attributes = randomizeAttributes();
