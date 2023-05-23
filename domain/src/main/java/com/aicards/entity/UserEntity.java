@@ -2,7 +2,7 @@ package com.aicards.entity;
 
 public class UserEntity {
 
-    private String nome;
+    private String nome ;
     private String sobrenome;
     private String idade;
     private String userId;
