@@ -1,6 +1,8 @@
 package com.aicards.entity;
 
 
+import com.aicards.entity.vo.AttributesEnum;
+
 import java.util.Map;
 
 public class CardEntity {

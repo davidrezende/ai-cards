@@ -2,7 +2,7 @@ package com.aicards.dataprovider.model;
 
 
 import com.aicards.entity.CardEntity;
-import com.aicards.entity.AttributesEnum;
+import com.aicards.entity.vo.AttributesEnum;
 import org.springframework.data.annotation.Id;
 import java.util.Map;
 
