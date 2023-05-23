@@ -26,11 +26,8 @@ public class CardUseCase {
 
     public CardEntity saveCard(CreateCardRequest cardRequest) {
         UserEntity userEntity = userUseCase.findUserByUserId(cardRequest.getUserId());
-        Map<AttributesEnum, Integer> attributes = new HashMap<>();
-        Random random = new Random();
-        for (AttributesEnum attribute : AttributesEnum.values()) {
-            attributes.put(attribute, random.nextInt(0, 100));
-        }
+        Map<AttributesEnum, Integer> attributes = randomizeAttributes();
+
         CardEntity carta = new CardEntity(
                 null,
                 "Carta",
@@ -39,5 +36,14 @@ public class CardUseCase {
                 attributes,
                 userEntity.getUserId());
         return cardDataProvider.saveCard(carta);
+    }
+
+    private Map<AttributesEnum, Integer> randomizeAttributes() {
+        Map<AttributesEnum, Integer> attributes = new HashMap<>();
+        Random random = new Random();
+        for (AttributesEnum attribute : AttributesEnum.values()) {
+            attributes.put(attribute, random.nextInt(0, 100));
+        }
+        return attributes;
     }
 }
