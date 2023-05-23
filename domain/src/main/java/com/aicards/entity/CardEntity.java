@@ -1,14 +1,12 @@
-package com.aicards.dataprovider.model;
+package com.aicards.entity;
 
 
-import com.aicards.entity.CardEntity;
 import com.aicards.entity.vo.AttributesEnum;
-import org.springframework.data.annotation.Id;
+
 import java.util.Map;
 
-public class Card {
+public class CardEntity {
 
-    @Id
     private String id;
     private String cardHash;
     private String name;
@@ -16,7 +14,7 @@ public class Card {
     private Map<AttributesEnum, Integer> attributes;
     private String userId;
 
-    public Card(String id, String name, String cardHash, String description, Map<AttributesEnum, Integer> attributes, String userId){
+    public CardEntity(String id, String name, String cardHash, String description, Map<AttributesEnum, Integer> attributes, String userId){
         this.id = id;
         this.name = name;
         this.cardHash = cardHash;
@@ -24,8 +22,6 @@ public class Card {
         this.attributes = attributes;
         this.userId = userId;
     }
-
-    public Card(){}
 
     public String getId() {
         return id;
@@ -73,27 +69,5 @@ public class Card {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public Card toCard(CardEntity cardEntity){
-        return new Card(
-                cardEntity.getId(),
-                cardEntity.getCardHash(),
-                cardEntity.getName(),
-                cardEntity.getDescription(),
-                cardEntity.getAttributes(),
-                cardEntity.getUserId()
-        );
-    }
-
-    public CardEntity toEntity(){
-        return new CardEntity(
-                this.id,
-                this.cardHash,
-                this.name,
-                this.description,
-                this.attributes,
-                this.userId
-        );
     }
 }

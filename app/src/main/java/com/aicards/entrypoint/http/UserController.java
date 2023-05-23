@@ -1,28 +1,26 @@
 package com.aicards.entrypoint.http;
 
-import com.aicards.dataprovider.model.User;
-import com.aicards.dataprovider.repository.UserRepository;
+import com.aicards.entity.vo.SaveUserRequest;
+import com.aicards.entity.UserEntity;
+import com.aicards.usecase.UserUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/user")
 public class UserController {
 
     @Autowired
-    private UserRepository repository;
+    private UserUseCase userUseCase;
 
     @GetMapping("/{userId}")
-    public String findUserById(@PathVariable String userId){
-        repository.findByUserId(userId);
-        return "OK";
+    public UserEntity findUserById(@PathVariable String userId) {
+        return userUseCase.findUserByUserId(userId);
     }
 
     @PostMapping
-    public User add(){
-        return repository.save(new User("DAVID", "LUCAS", "1999", UUID.randomUUID().toString()));
+    public UserEntity add(@RequestBody SaveUserRequest saveUserRequest) {
+        return userUseCase.saveUser(saveUserRequest);
     }
 
 }
