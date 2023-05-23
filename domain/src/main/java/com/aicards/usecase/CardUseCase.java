@@ -1,9 +1,10 @@
 package com.aicards.usecase;
 
 import com.aicards.dataprovider.CardDataProvider;
-import com.aicards.entity.AttributesEnum;
+import com.aicards.dataprovider.OpenAPIClientProvider;
 import com.aicards.entity.CardEntity;
 import com.aicards.entity.UserEntity;
+import com.aicards.entity.vo.AttributesEnum;
 import com.aicards.entity.vo.CreateCardRequest;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +14,13 @@ import java.util.*;
 public class CardUseCase {
 
     private final CardDataProvider cardDataProvider;
+
+    private final OpenAPIClientProvider openAIClient;
     private final UserUseCase userUseCase;
 
-    public CardUseCase(CardDataProvider cardDataProvider, UserUseCase userUseCase) {
+    public CardUseCase(CardDataProvider cardDataProvider, OpenAPIClientProvider openAIClient, UserUseCase userUseCase) {
         this.cardDataProvider = cardDataProvider;
+        this.openAIClient = openAIClient;
         this.userUseCase = userUseCase;
     }
 
@@ -25,6 +29,7 @@ public class CardUseCase {
     }
 
     public CardEntity saveCard(CreateCardRequest cardRequest) {
+        String descriptionGPT = openAIClient.callOpenAI(cardRequest.getPrompt());
         UserEntity userEntity = userUseCase.findUserByUserId(cardRequest.getUserId());
         Map<AttributesEnum, Integer> attributes = randomizeAttributes();
 
@@ -32,7 +37,7 @@ public class CardUseCase {
                 null,
                 "Carta",
                 UUID.randomUUID().toString(),
-                "É uma carta",
+                descriptionGPT,
                 attributes,
                 userEntity.getUserId());
         return cardDataProvider.saveCard(carta);
