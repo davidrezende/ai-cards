@@ -3,26 +3,33 @@ package com.aicards.dataprovider.client;
 import com.aicards.dataprovider.OpenAPIClientProvider;
 import com.aicards.entity.vo.OpenAPIClientResponse;
 import com.aicards.entity.vo.PromptRequest;
+import com.aicards.entity.vo.QuestionsResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Component
 public class OpenAIClient implements OpenAPIClientProvider {
     private static final String API_URL = "https://api.openai.com/v1/completions";
 
     @Override
-    public String callOpenAI(String prompt) throws JsonProcessingException {
+    public String callOpenAI(List<QuestionsResponse> questions) throws JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth("");
+        final String[] prompt = {"Crie a Biografia de um personagem com as seguintes predefinições: "};
+        questions.forEach(it ->
+                prompt[0] += "Pergunta: " + it.getQuestionText() + " resposta: " + it.getAnswer() + ". ");
 
         PromptRequest promptRequest = new PromptRequest(
                 "text-davinci-003",
-                prompt,
+                Arrays.toString(prompt),
                 0,
                 1024,
                 1,

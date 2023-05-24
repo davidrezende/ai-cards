@@ -3,6 +3,7 @@ package com.aicards.dataprovider;
 import com.aicards.dataprovider.model.Question;
 import com.aicards.dataprovider.repository.QuestionRepository;
 import com.aicards.entity.QuestionEntity;
+import com.aicards.exception.custom.QuestionNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +27,8 @@ public class QuestionMongoProvider implements QuestionDataProvider {
 
     @Override
     public QuestionEntity findQuestionByQuestionId(String questionId) {
-        return repository.findByQuestionId(questionId).toEntity();
+        Question question = repository.findByQuestionId(questionId);
+        if(question == null) throw new QuestionNotFoundException("Pergunta: " + "\"" + questionId + "\"" + " não encontrada.");
+        return question.toEntity();
     }
 }
