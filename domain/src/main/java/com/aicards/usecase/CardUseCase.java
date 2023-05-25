@@ -6,6 +6,7 @@ import com.aicards.entity.CardEntity;
 import com.aicards.entity.UserEntity;
 import com.aicards.entity.vo.AttributesEnum;
 import com.aicards.entity.vo.CreateCardRequest;
+import com.aicards.entity.vo.QuestionsResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +16,14 @@ import java.util.*;
 public class CardUseCase {
 
     private final CardDataProvider cardDataProvider;
+    private final QuestionUseCase questionUseCase;
 
     private final OpenAPIClientProvider openAIClient;
     private final UserUseCase userUseCase;
 
-    public CardUseCase(CardDataProvider cardDataProvider, OpenAPIClientProvider openAIClient, UserUseCase userUseCase) {
+    public CardUseCase(CardDataProvider cardDataProvider, QuestionUseCase questionUseCase, OpenAPIClientProvider openAIClient, UserUseCase userUseCase) {
         this.cardDataProvider = cardDataProvider;
+        this.questionUseCase = questionUseCase;
         this.openAIClient = openAIClient;
         this.userUseCase = userUseCase;
     }
@@ -30,8 +33,13 @@ public class CardUseCase {
     }
 
     public CardEntity saveCard(CreateCardRequest cardRequest) throws JsonProcessingException {
-        String descriptionGPT = openAIClient.callOpenAI(cardRequest.getPrompt());
         UserEntity userEntity = userUseCase.findUserByUserId(cardRequest.getUserId());
+        List<QuestionsResponse> questionsPrompt = cardRequest.getQuestions().stream().map(it ->
+                new QuestionsResponse(
+                        questionUseCase.findQuestionByQuestionId(it.getQuestionId()).getQuestion(),
+                        it.getAnswer()
+                )).toList();
+        String descriptionGPT = openAIClient.callOpenAI(questionsPrompt);
         Map<AttributesEnum, Integer> attributes = randomizeAttributes();
 
         CardEntity carta = new CardEntity(
@@ -40,6 +48,7 @@ public class CardUseCase {
                 UUID.randomUUID().toString(),
                 descriptionGPT,
                 attributes,
+                questionsPrompt,
                 userEntity.getUserId());
         return cardDataProvider.saveCard(carta);
     }

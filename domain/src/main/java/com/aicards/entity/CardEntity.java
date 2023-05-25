@@ -2,7 +2,9 @@ package com.aicards.entity;
 
 
 import com.aicards.entity.vo.AttributesEnum;
+import com.aicards.entity.vo.QuestionsResponse;
 
+import java.util.List;
 import java.util.Map;
 
 public class CardEntity {
@@ -12,14 +14,16 @@ public class CardEntity {
     private String name;
     private String description;
     private Map<AttributesEnum, Integer> attributes;
+    private List<QuestionsResponse> prompt;
     private String userId;
 
-    public CardEntity(String id, String name, String cardHash, String description, Map<AttributesEnum, Integer> attributes, String userId){
+    public CardEntity(String id, String name, String cardHash, String description, Map<AttributesEnum, Integer> attributes, List<QuestionsResponse> prompt, String userId){
         this.id = id;
         this.name = name;
         this.cardHash = cardHash;
         this.description = description;
         this.attributes = attributes;
+        this.prompt = prompt;
         this.userId = userId;
     }
 
@@ -69,5 +73,13 @@ public class CardEntity {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public List<QuestionsResponse> getPrompt() {
+        return prompt;
+    }
+
+    public void setPrompt(List<QuestionsResponse> prompt) {
+        this.prompt = prompt;
     }
 }
