@@ -23,13 +23,15 @@ public class OpenAIClient implements OpenAPIClientProvider {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth("");
-        final String[] prompt = {"Crie a Biografia de um personagem com as seguintes predefinições: "};
-        questions.forEach(it ->
-                prompt[0] += "Pergunta: " + it.getQuestionText() + " resposta: " + it.getAnswer() + ". ");
+        String prompt = "Crie a Biografia de um personagem com as seguintes predefinições: ";
+
+        for (int i = 0; i < questions.size(); i++){
+            prompt += "Pergunta: " + questions.get(i).getQuestionText() + " resposta: " + questions.get(i).getAnswer() + ". ";
+        }
 
         PromptRequest promptRequest = new PromptRequest(
                 "text-davinci-003",
-                Arrays.toString(prompt),
+                prompt,
                 0,
                 1024,
                 1,
