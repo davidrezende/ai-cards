@@ -8,7 +8,7 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 
 @Component
-@RabbitListener(queues = "teste")
+@RabbitListener(queues = "${config.rabbit.queue-name}")
 public class RabbitMQReceiver {
 
     @RabbitHandler
