@@ -18,7 +18,7 @@ public class OpenAIClient implements OpenAPIClientProvider {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth("");
+        headers.setBearerAuth("${config.openapi.token}");
 
         PromptRequest promptRequest = new PromptRequest(
                 "text-davinci-003",
