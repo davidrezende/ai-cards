@@ -1,8 +1,10 @@
 package com.aicards.entity.vo;
 
+import java.util.List;
+
 public class CreateCardRequest {
     private String userId;
-    private String prompt;
+    private List<QuestionsRequest> questions;
 
     public String getUserId() {
         return userId;
@@ -12,11 +14,11 @@ public class CreateCardRequest {
         this.userId = userId;
     }
 
-    public String getPrompt() {
-        return prompt;
+    public List<QuestionsRequest> getQuestions() {
+        return questions;
     }
 
-    public void setPrompt(String prompt) {
-        this.prompt = prompt;
+    public void setQuestions(List<QuestionsRequest> questions) {
+        this.questions = questions;
     }
 }
