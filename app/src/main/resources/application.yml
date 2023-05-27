@@ -2,3 +2,16 @@ spring:
   data:
     mongodb:
       uri:
+
+config:
+  rabbit:
+    host: ""
+    username: ""
+    password: ""
+    exchange: ""
+    routing-key: ""
+    queues:
+      text-generator: ""
+      default-queue: ""
+  openai:
+    token: ""

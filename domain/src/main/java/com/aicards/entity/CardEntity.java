@@ -17,7 +17,7 @@ public class CardEntity {
     private List<QuestionsResponse> prompt;
     private String userId;
 
-    public CardEntity(String id, String name, String cardHash, String description, Map<AttributesEnum, Integer> attributes, List<QuestionsResponse> prompt, String userId){
+    public CardEntity(String id, String cardHash, String name, String description, Map<AttributesEnum, Integer> attributes, List<QuestionsResponse> prompt, String userId){
         this.id = id;
         this.name = name;
         this.cardHash = cardHash;
