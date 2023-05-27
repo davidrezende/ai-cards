@@ -1,6 +1,6 @@
 package com.aicards.entrypoint.http.rabbit;
 
-import com.aicards.entity.vo.EventVO;
+import com.aicards.entity.event.EventVO;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

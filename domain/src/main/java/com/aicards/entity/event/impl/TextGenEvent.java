@@ -1,5 +1,7 @@
-package com.aicards.entity.vo;
+package com.aicards.entity.event.impl;
 
+
+import com.aicards.entity.event.EventVO;
 
 public class TextGenEvent implements EventVO {
 

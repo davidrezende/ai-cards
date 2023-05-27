@@ -4,6 +4,8 @@ import com.aicards.dataprovider.CardDataProvider;
 import com.aicards.dataprovider.EventProvider;
 import com.aicards.entity.CardEntity;
 import com.aicards.entity.UserEntity;
+import com.aicards.entity.event.EventVO;
+import com.aicards.entity.event.impl.TextGenEvent;
 import com.aicards.entity.vo.*;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +43,8 @@ public class CardUseCase {
 
         CardEntity carta = new CardEntity(
                 null,
-                null,
                 UUID.randomUUID().toString(),
+                null,
                 null,
                 attributes,
                 questionsPrompt,

@@ -33,13 +33,8 @@ public class CardController {
     }
 
     @GetMapping("/{cardHash}")
-    public Card getByCardHash(@PathVariable String cardHash) throws Exception {
-        Card card = repository.findByCardHash(cardHash);
-        if(card != null){
-            System.out.println("Nao esta nulo");
-        }
-        System.out.println(card);
-        return card;
+    public Card getByCardHash(@PathVariable String cardHash) {
+        return repository.findByCardHash(cardHash);
     }
 
 }

@@ -25,8 +25,10 @@ public class CardMongoProvider implements CardDataProvider{
     }
 
     @Override
-    public CardEntity updateCard(CardEntity cardEntity) {
-        return repository.save(new Card().toCard(cardEntity)).toEntity();
+    public CardEntity updateCard(CardEntity cardEntity) throws Exception {
+        Card cardUpdated = repository.save(new Card().toCard(cardEntity));
+        if(cardUpdated == null) throw new Exception("Erro ao atualizar a carta: "+ cardEntity.getCardHash());
+        return cardUpdated.toEntity();
     }
 
     @Override

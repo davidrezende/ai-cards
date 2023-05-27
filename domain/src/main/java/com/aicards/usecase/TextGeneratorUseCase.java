@@ -2,7 +2,7 @@ package com.aicards.usecase;
 
 import com.aicards.dataprovider.OpenAPIClientProvider;
 import com.aicards.entity.CardEntity;
-import com.aicards.entity.vo.TextGenEvent;
+import com.aicards.entity.event.impl.TextGenEvent;
 import org.springframework.stereotype.Service;
 
 @Service

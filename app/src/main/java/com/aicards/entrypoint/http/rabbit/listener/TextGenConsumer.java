@@ -1,7 +1,7 @@
 package com.aicards.entrypoint.http.rabbit.listener;
 
 import com.aicards.entity.CardEntity;
-import com.aicards.entity.vo.TextGenEvent;
+import com.aicards.entity.event.impl.TextGenEvent;
 import com.aicards.usecase.TextGeneratorUseCase;
 import com.rabbitmq.client.Channel;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
@@ -22,13 +22,13 @@ public class TextGenConsumer {
 
     @RabbitHandler
     public void receive(TextGenEvent message, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) throws Exception {
-        System.out.println("Message: " + message.toString());
-
-        CardEntity cardUpdated = textGenUseCase.generateAndUpdateCard(message);
-        if(cardUpdated != null){
+        try{
+            System.out.println("Message: " + message.toString());
+            CardEntity cardUpdated = textGenUseCase.generateAndUpdateCard(message);
             channel.basicAck(tag, false);
+        }catch (Exception e){
+            throw new Exception("Erro ao processar evento de geracao de texto.");
         }
-        throw new Exception("Erro ao processar evento de geracao de texto.");
     }
 }
 
