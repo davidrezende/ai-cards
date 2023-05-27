@@ -1,12 +1,13 @@
 package com.aicards.usecase;
 
 import com.aicards.dataprovider.CardDataProvider;
-import com.aicards.dataprovider.EventProvider;
+import com.aicards.dataprovider.EventProducerProvider;
 import com.aicards.entity.CardEntity;
 import com.aicards.entity.UserEntity;
 import com.aicards.entity.event.EventVO;
 import com.aicards.entity.event.impl.TextGenEvent;
 import com.aicards.entity.vo.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -14,14 +15,16 @@ import java.util.*;
 @Service
 public class CardUseCase {
 
+    @Value("${config.rabbit.queues.text-generator}")
+    private String textGeneratorQueueName;
     private final CardDataProvider cardDataProvider;
-    private final EventProvider eventProvider;
+    private final EventProducerProvider eventProducerProvider;
     private final SaveUserUseCase userUseCase;
     private final QuestionUseCase questionUseCase;
 
-    public CardUseCase(CardDataProvider cardDataProvider, EventProvider eventProvider, SaveUserUseCase userUseCase, QuestionUseCase questionUseCase) {
+    public CardUseCase(CardDataProvider cardDataProvider, EventProducerProvider eventProvider, SaveUserUseCase userUseCase, QuestionUseCase questionUseCase) {
         this.cardDataProvider = cardDataProvider;
-        this.eventProvider = eventProvider;
+        this.eventProducerProvider = eventProvider;
         this.userUseCase = userUseCase;
         this.questionUseCase = questionUseCase;
     }
@@ -60,10 +63,10 @@ public class CardUseCase {
             prompt += "Pergunta: " + questionsPrompt.get(i).getQuestionText() + " resposta: " + questionsPrompt.get(i).getAnswer() + ". ";
         }
 
-        EventVO textEvent = new TextGenEvent(prompt, card.getCardHash());
 
         if(card != null){
-            eventProvider.sendMessage(textEvent);
+            EventVO textEvent = new TextGenEvent(prompt, card.getCardHash());
+            eventProducerProvider.sendMessage(textGeneratorQueueName, textEvent);
             System.out.println("Evento enviado!");
             return card;
         }

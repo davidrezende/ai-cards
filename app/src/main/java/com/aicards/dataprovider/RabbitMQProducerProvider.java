@@ -1,4 +1,4 @@
-package com.aicards.entrypoint.http.rabbit;
+package com.aicards.dataprovider;
 
 import com.aicards.entity.event.EventVO;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RabbitMQSender {
+public class RabbitMQProducerProvider implements EventProducerProvider {
 
     @Autowired
     private AmqpTemplate rabbitTemplate;
 
-    public void send(String queueName, EventVO vo) {
-        rabbitTemplate.convertAndSend(queueName, vo);
+    @Override
+    public void sendMessage(String queueName, EventVO event) {
+        rabbitTemplate.convertAndSend(queueName, event);
     }
 }
