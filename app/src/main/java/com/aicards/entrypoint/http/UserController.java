@@ -2,7 +2,7 @@ package com.aicards.entrypoint.http;
 
 import com.aicards.entity.vo.SaveUserRequest;
 import com.aicards.entity.UserEntity;
-import com.aicards.usecase.UserUseCase;
+import com.aicards.usecase.SaveUserUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    private UserUseCase userUseCase;
+    private SaveUserUseCase userUseCase;
 
     @GetMapping("/{userId}")
     public UserEntity findUserById(@PathVariable String userId) {

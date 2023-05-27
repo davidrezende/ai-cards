@@ -18,7 +18,7 @@ public class RabbitMQConfig {
     @Value("${config.rabbit.host}")
     private String host;
 
-    @Value("${config.rabbit.queue-name}")
+    @Value("${config.rabbit.queues.text-generator}")
     private String queueName;
 
     @Value("${config.rabbit.exchange}")

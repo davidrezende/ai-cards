@@ -24,7 +24,7 @@ public class CardController {
     @PostMapping
     @Transactional
     public CardEntity add(@RequestBody CreateCardRequest cardRequest) throws Exception {
-        return cardUseCase.saveCard(cardRequest);
+        return cardUseCase.generateCard(cardRequest);
     }
 
 }

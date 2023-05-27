@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class UserUseCase {
+public class SaveUserUseCase {
 
     private final UserDataProvider userDataProvider;
 
-    public UserUseCase(UserDataProvider userDataProvider) {
+    public SaveUserUseCase(UserDataProvider userDataProvider) {
         this.userDataProvider = userDataProvider;
     }
 

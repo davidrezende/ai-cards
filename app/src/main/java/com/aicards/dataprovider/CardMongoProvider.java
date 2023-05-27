@@ -23,4 +23,18 @@ public class CardMongoProvider implements CardDataProvider{
     public CardEntity saveCard(CardEntity cardEntity) {
         return repository.save(new Card().toCard(cardEntity)).toEntity();
     }
+
+    @Override
+    public CardEntity updateCard(CardEntity cardEntity) {
+        return repository.save(new Card().toCard(cardEntity)).toEntity();
+    }
+
+    @Override
+    public CardEntity findByCardHash(String cardHash) throws Exception {
+        Card card = repository.findByCardHash(cardHash);
+        if(card == null) throw new Exception("Carta: "+ cardHash +" não encontrada.");
+        return card.toEntity();
+    }
+
+
 }
