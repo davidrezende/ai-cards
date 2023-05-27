@@ -10,6 +10,8 @@ config:
     password: ""
     exchange: ""
     routing-key: ""
-    queue-name: ""
-  openapi:
+    queues:
+      text-generator: ""
+      default-queue: ""
+  openai:
     token: ""
