@@ -17,7 +17,7 @@ public class CardController {
     private CardUseCase cardUseCase;
 
     @GetMapping("/{userId}")
-    public List<CardEntity> findUserById(@PathVariable String userId){
+    public List<CardEntity> findAllCardsByUserId(@PathVariable String userId){
         return cardUseCase.findAllCardsByUserId(userId);
     }
 

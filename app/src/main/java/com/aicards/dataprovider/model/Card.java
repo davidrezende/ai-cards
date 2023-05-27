@@ -3,7 +3,10 @@ package com.aicards.dataprovider.model;
 
 import com.aicards.entity.CardEntity;
 import com.aicards.entity.vo.AttributesEnum;
+import com.aicards.entity.vo.QuestionsResponse;
 import org.springframework.data.annotation.Id;
+
+import java.util.List;
 import java.util.Map;
 
 public class Card {
@@ -14,14 +17,16 @@ public class Card {
     private String name;
     private String description;
     private Map<AttributesEnum, Integer> attributes;
+    private List<QuestionsResponse> prompt;
     private String userId;
 
-    public Card(String id, String name, String cardHash, String description, Map<AttributesEnum, Integer> attributes, String userId){
+    public Card(String id, String name, String cardHash, String description, Map<AttributesEnum, Integer> attributes, List<QuestionsResponse> prompt, String userId){
         this.id = id;
         this.name = name;
         this.cardHash = cardHash;
         this.description = description;
         this.attributes = attributes;
+        this.prompt = prompt;
         this.userId = userId;
     }
 
@@ -75,6 +80,14 @@ public class Card {
         this.userId = userId;
     }
 
+    public List<QuestionsResponse> getPrompt() {
+        return prompt;
+    }
+
+    public void setPrompt(List<QuestionsResponse> prompt) {
+        this.prompt = prompt;
+    }
+
     public Card toCard(CardEntity cardEntity){
         return new Card(
                 cardEntity.getId(),
@@ -82,6 +95,7 @@ public class Card {
                 cardEntity.getName(),
                 cardEntity.getDescription(),
                 cardEntity.getAttributes(),
+                cardEntity.getPrompt(),
                 cardEntity.getUserId()
         );
     }
@@ -93,6 +107,7 @@ public class Card {
                 this.name,
                 this.description,
                 this.attributes,
+                this.prompt,
                 this.userId
         );
     }
