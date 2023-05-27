@@ -13,16 +13,16 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class CardUseCase {
+public class SaveCardUseCase {
 
     @Value("${config.rabbit.queues.text-generator}")
     private String textGeneratorQueueName;
     private final CardDataProvider cardDataProvider;
     private final EventProducerProvider eventProducerProvider;
-    private final SaveUserUseCase userUseCase;
+    private final UserUseCase userUseCase;
     private final QuestionUseCase questionUseCase;
 
-    public CardUseCase(CardDataProvider cardDataProvider, EventProducerProvider eventProvider, SaveUserUseCase userUseCase, QuestionUseCase questionUseCase) {
+    public SaveCardUseCase(CardDataProvider cardDataProvider, EventProducerProvider eventProvider, UserUseCase userUseCase, QuestionUseCase questionUseCase) {
         this.cardDataProvider = cardDataProvider;
         this.eventProducerProvider = eventProvider;
         this.userUseCase = userUseCase;

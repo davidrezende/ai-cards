@@ -4,7 +4,7 @@ import com.aicards.dataprovider.model.Card;
 import com.aicards.dataprovider.repository.CardRepository;
 import com.aicards.entity.CardEntity;
 import com.aicards.entity.vo.CreateCardRequest;
-import com.aicards.usecase.CardUseCase;
+import com.aicards.usecase.SaveCardUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,7 @@ import java.util.*;
 public class CardController {
 
     @Autowired
-    private CardUseCase cardUseCase;
+    private SaveCardUseCase cardUseCase;
 
     @Autowired
     private CardRepository repository;

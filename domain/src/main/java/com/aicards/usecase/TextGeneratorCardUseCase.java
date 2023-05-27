@@ -6,12 +6,12 @@ import com.aicards.entity.event.impl.TextGenEvent;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TextGeneratorUseCase {
+public class TextGeneratorCardUseCase {
 
     private final UpdateCardUseCase updateCardUseCase;
     private final OpenAPIClientProvider openAIClient;
 
-    public TextGeneratorUseCase(UpdateCardUseCase updateCardProvider, OpenAPIClientProvider openAIClient) {
+    public TextGeneratorCardUseCase(UpdateCardUseCase updateCardProvider, OpenAPIClientProvider openAIClient) {
         this.updateCardUseCase = updateCardProvider;
         this.openAIClient = openAIClient;
     }

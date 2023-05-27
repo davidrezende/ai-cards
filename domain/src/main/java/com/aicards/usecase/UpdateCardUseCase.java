@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 public class UpdateCardUseCase {
 
     private final CardDataProvider cardDataProvider;
-    private final SaveUserUseCase userUseCase;
+    private final UserUseCase userUseCase;
 
-    public UpdateCardUseCase(CardDataProvider cardDataProvider, SaveUserUseCase userUseCase) {
+    public UpdateCardUseCase(CardDataProvider cardDataProvider, UserUseCase userUseCase) {
         this.cardDataProvider = cardDataProvider;
         this.userUseCase = userUseCase;
     }

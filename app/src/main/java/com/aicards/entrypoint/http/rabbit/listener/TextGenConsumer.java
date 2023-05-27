@@ -2,7 +2,7 @@ package com.aicards.entrypoint.http.rabbit.listener;
 
 import com.aicards.entity.CardEntity;
 import com.aicards.entity.event.impl.TextGenEvent;
-import com.aicards.usecase.TextGeneratorUseCase;
+import com.aicards.usecase.TextGeneratorCardUseCase;
 import com.rabbitmq.client.Channel;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -14,9 +14,9 @@ import org.springframework.stereotype.Component;
 @RabbitListener(queues = "${config.rabbit.queues.text-generator}")
 public class TextGenConsumer {
 
-    private final TextGeneratorUseCase textGenUseCase;
+    private final TextGeneratorCardUseCase textGenUseCase;
 
-    public TextGenConsumer(TextGeneratorUseCase textGenUseCase) {
+    public TextGenConsumer(TextGeneratorCardUseCase textGenUseCase) {
         this.textGenUseCase = textGenUseCase;
     }
 
