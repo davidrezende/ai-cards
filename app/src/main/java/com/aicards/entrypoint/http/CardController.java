@@ -1,5 +1,7 @@
 package com.aicards.entrypoint.http;
 
+import com.aicards.dataprovider.model.Card;
+import com.aicards.dataprovider.repository.CardRepository;
 import com.aicards.entity.CardEntity;
 import com.aicards.entity.vo.CreateCardRequest;
 import com.aicards.usecase.CardUseCase;
@@ -16,7 +18,10 @@ public class CardController {
     @Autowired
     private CardUseCase cardUseCase;
 
-    @GetMapping("/{userId}")
+    @Autowired
+    private CardRepository repository;
+
+    @GetMapping("/user/{userId}")
     public List<CardEntity> findAllCardsByUserId(@PathVariable String userId){
         return cardUseCase.findAllCardsByUserId(userId);
     }
@@ -25,6 +30,16 @@ public class CardController {
     @Transactional
     public CardEntity add(@RequestBody CreateCardRequest cardRequest) throws Exception {
         return cardUseCase.generateCard(cardRequest);
+    }
+
+    @GetMapping("/{cardHash}")
+    public Card getByCardHash(@PathVariable String cardHash) throws Exception {
+        Card card = repository.findByCardHash(cardHash);
+        if(card != null){
+            System.out.println("Nao esta nulo");
+        }
+        System.out.println(card);
+        return card;
     }
 
 }
