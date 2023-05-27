@@ -18,6 +18,7 @@ public class TextGeneratorUseCase {
 
     public CardEntity generateAndUpdateCard(TextGenEvent vo) throws Exception {
         String description = openAIClient.callOpenAI(vo.getPrompt());
+        System.out.println(description);
         return updateCardUseCase.updateCardWithText(vo.getCardHash(), description, description);
     }
 }

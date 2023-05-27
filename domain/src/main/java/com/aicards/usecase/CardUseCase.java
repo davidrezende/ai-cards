@@ -1,13 +1,10 @@
 package com.aicards.usecase;
 
 import com.aicards.dataprovider.CardDataProvider;
-import com.aicards.dataprovider.OpenAPIClientProvider;
+import com.aicards.dataprovider.EventProvider;
 import com.aicards.entity.CardEntity;
 import com.aicards.entity.UserEntity;
-import com.aicards.entity.vo.AttributesEnum;
-import com.aicards.entity.vo.CreateCardRequest;
-import com.aicards.entity.vo.QuestionsResponse;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.aicards.entity.vo.*;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -19,14 +16,14 @@ public class CardUseCase {
     private final EventProvider eventProvider;
     private final SaveUserUseCase userUseCase;
     private final QuestionUseCase questionUseCase;
-    private final UserUseCase userUseCase;
 
-    public CardUseCase(CardDataProvider cardDataProvider, QuestionUseCase questionUseCase, UserUseCase userUseCase) {
+    public CardUseCase(CardDataProvider cardDataProvider, EventProvider eventProvider, SaveUserUseCase userUseCase, QuestionUseCase questionUseCase) {
         this.cardDataProvider = cardDataProvider;
         this.eventProvider = eventProvider;
-        this.questionUseCase = questionUseCase;
         this.userUseCase = userUseCase;
+        this.questionUseCase = questionUseCase;
     }
+
 
     public List<CardEntity> findAllCardsByUserId(String userId) {
         return cardDataProvider.findAllCardsByUserId(userId);
@@ -40,7 +37,6 @@ public class CardUseCase {
                         questionUseCase.findQuestionByQuestionId(it.getQuestionId()).getQuestion(),
                         it.getAnswer()
                 )).toList();
-        String descriptionGPT = openAIClient.callOpenAI(questionsPrompt);
         Map<AttributesEnum, Integer> attributes = randomizeAttributes();
 
         CardEntity carta = new CardEntity(
@@ -54,7 +50,15 @@ public class CardUseCase {
 
         CardEntity card = cardDataProvider.saveCard(carta);
 
-        EventVO textEvent = new TextGenEvent(cardRequest.getPrompt(), card.getCardHash());
+//        TODO: criar usecase para criar o prompt colocar o código abaixo
+
+        String prompt = "Crie a Biografia de um personagem com as seguintes predefinições: ";
+
+        for (int i = 0; i < questionsPrompt.size(); i++){
+            prompt += "Pergunta: " + questionsPrompt.get(i).getQuestionText() + " resposta: " + questionsPrompt.get(i).getAnswer() + ". ";
+        }
+
+        EventVO textEvent = new TextGenEvent(prompt, card.getCardHash());
 
         if(card != null){
             eventProvider.sendMessage(textEvent);
