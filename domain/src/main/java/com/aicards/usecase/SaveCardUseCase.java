@@ -6,7 +6,9 @@ import com.aicards.entity.CardEntity;
 import com.aicards.entity.UserEntity;
 import com.aicards.entity.event.EventVO;
 import com.aicards.entity.event.impl.TextGenEvent;
-import com.aicards.entity.vo.*;
+import com.aicards.entity.vo.AttributesEnum;
+import com.aicards.entity.vo.CreateCardRequest;
+import com.aicards.entity.vo.QuestionsResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -17,16 +19,19 @@ public class SaveCardUseCase {
 
     @Value("${config.rabbit.queues.text-generator}")
     private String textGeneratorQueueName;
+
     private final CardDataProvider cardDataProvider;
     private final EventProducerProvider eventProducerProvider;
     private final UserUseCase userUseCase;
     private final QuestionUseCase questionUseCase;
+    private final PromptUseCase promptUseCase;
 
-    public SaveCardUseCase(CardDataProvider cardDataProvider, EventProducerProvider eventProvider, UserUseCase userUseCase, QuestionUseCase questionUseCase) {
+    public SaveCardUseCase(CardDataProvider cardDataProvider, EventProducerProvider eventProvider, UserUseCase userUseCase, QuestionUseCase questionUseCase, PromptUseCase promptUseCase) {
         this.cardDataProvider = cardDataProvider;
         this.eventProducerProvider = eventProvider;
         this.userUseCase = userUseCase;
         this.questionUseCase = questionUseCase;
+        this.promptUseCase = promptUseCase;
     }
 
 
@@ -54,15 +59,7 @@ public class SaveCardUseCase {
                 userEntity.getUserId());
 
         CardEntity card = cardDataProvider.saveCard(carta);
-
-//        TODO: criar usecase para criar o prompt colocar o código abaixo
-
-        String prompt = "Crie a Biografia de um personagem com as seguintes predefinições: ";
-
-        for (int i = 0; i < questionsPrompt.size(); i++){
-            prompt += "Pergunta: " + questionsPrompt.get(i).getQuestionText() + " resposta: " + questionsPrompt.get(i).getAnswer() + ". ";
-        }
-
+        String prompt = promptUseCase.createPrompt(questionsPrompt);
 
         if(card != null){
             EventVO textEvent = new TextGenEvent(prompt, card.getCardHash());
