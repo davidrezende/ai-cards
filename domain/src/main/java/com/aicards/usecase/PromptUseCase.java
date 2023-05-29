@@ -8,12 +8,14 @@ import java.util.List;
 @Service
 public class PromptUseCase {
 
-    public String createPrompt(List<QuestionsResponse> vo){
-        String prompt = "Crie a Biografia de um personagem com as seguintes predefinições: ";
+    public String createPrompt(List<QuestionsResponse> vo) {
+        StringBuilder prompt = new StringBuilder("Crie a Biografia de um personagem com as seguintes predefinições: ");
 
-        for (int i = 0; i < vo.size(); i++){
-            prompt += "Pergunta: " + vo.get(i).getQuestionText() + " resposta: " + vo.get(i).getAnswer() + ". ";
+        for (QuestionsResponse questionsResponse : vo) {
+            prompt
+                    .append("Pergunta: ").append(questionsResponse.getQuestionText()).append(" ")
+                    .append("Resposta: ").append(questionsResponse.getAnswer()).append(". ");
         }
-        return prompt;
+        return prompt.toString();
     }
 }

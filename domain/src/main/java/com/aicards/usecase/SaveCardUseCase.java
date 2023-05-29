@@ -42,11 +42,7 @@ public class SaveCardUseCase {
     public CardEntity generateCard(CreateCardRequest cardRequest) throws Exception {
 
         UserEntity userEntity = userUseCase.findUserByUserId(cardRequest.getUserId());
-        List<QuestionsResponse> questionsPrompt = cardRequest.getQuestions().stream().map(it ->
-                new QuestionsResponse(
-                        questionUseCase.findQuestionByQuestionId(it.getQuestionId()).getQuestion(),
-                        it.getAnswer()
-                )).toList();
+        List<QuestionsResponse> questionsPrompt = questionUseCase.createListQuestionsResponse(cardRequest.getQuestions());
         Map<AttributesEnum, Integer> attributes = randomizeAttributes();
 
         CardEntity carta = new CardEntity(
