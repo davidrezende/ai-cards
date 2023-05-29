@@ -4,6 +4,8 @@ import com.aicards.dataprovider.CardDataProvider;
 import com.aicards.entity.CardEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class UpdateCardUseCase {
 
@@ -17,6 +19,8 @@ public class UpdateCardUseCase {
         CardEntity card = cardDataProvider.findByCardHash(cardHash);
         card.setName(name);
         card.setDescription(description);
+        card.setStatus(true);
+        card.setDatUpdate(LocalDateTime.now());
         return cardDataProvider.updateCard(card);
     }
 
