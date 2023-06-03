@@ -5,6 +5,7 @@ import com.aicards.entity.UserEntity;
 import com.aicards.entity.vo.SaveUserRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Service
@@ -26,7 +27,8 @@ public class UserUseCase {
                 saveUserRequest.getNome(),
                 saveUserRequest.getSobrenome(),
                 saveUserRequest.getIdade(),
-                UUID.randomUUID().toString()
+                UUID.randomUUID().toString(),
+                LocalDate.now()
         );
 
         return userDataProvider.saveUser(userEntity);

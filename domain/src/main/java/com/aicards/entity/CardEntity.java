@@ -4,6 +4,7 @@ package com.aicards.entity;
 import com.aicards.entity.vo.AttributesEnum;
 import com.aicards.entity.vo.QuestionsResponse;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -16,15 +17,22 @@ public class CardEntity {
     private Map<AttributesEnum, Integer> attributes;
     private List<QuestionsResponse> prompt;
     private String userId;
+    private Boolean status;
+    private LocalDateTime datCreation;
+    private LocalDateTime datUpdate;
 
-    public CardEntity(String id, String cardHash, String name, String description, Map<AttributesEnum, Integer> attributes, List<QuestionsResponse> prompt, String userId){
+
+    public CardEntity(String id, String cardHash, String name, String description, Map<AttributesEnum, Integer> attributes, List<QuestionsResponse> prompt, String userId, Boolean status, LocalDateTime datCreation, LocalDateTime datUpdate) {
         this.id = id;
-        this.name = name;
         this.cardHash = cardHash;
+        this.name = name;
         this.description = description;
         this.attributes = attributes;
         this.prompt = prompt;
         this.userId = userId;
+        this.status = status;
+        this.datCreation = datCreation;
+        this.datUpdate = datUpdate;
     }
 
     public String getId() {
@@ -81,5 +89,29 @@ public class CardEntity {
 
     public void setPrompt(List<QuestionsResponse> prompt) {
         this.prompt = prompt;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getDatCreation() {
+        return datCreation;
+    }
+
+    public void setDatCreation(LocalDateTime datCreation) {
+        this.datCreation = datCreation;
+    }
+
+    public LocalDateTime getDatUpdate() {
+        return datUpdate;
+    }
+
+    public void setDatUpdate(LocalDateTime datUpdate) {
+        this.datUpdate = datUpdate;
     }
 }

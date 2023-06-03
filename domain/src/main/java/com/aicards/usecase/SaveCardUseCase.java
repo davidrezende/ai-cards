@@ -12,6 +12,7 @@ import com.aicards.entity.vo.QuestionsResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -52,7 +53,11 @@ public class SaveCardUseCase {
                 null,
                 attributes,
                 questionsPrompt,
-                userEntity.getUserId());
+                userEntity.getUserId(),
+                false,
+                LocalDateTime.now(),
+                null
+        );
 
         CardEntity card = cardDataProvider.saveCard(carta);
         String prompt = promptUseCase.createPrompt(questionsPrompt);

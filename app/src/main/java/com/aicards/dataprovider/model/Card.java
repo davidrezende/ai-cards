@@ -6,6 +6,7 @@ import com.aicards.entity.vo.AttributesEnum;
 import com.aicards.entity.vo.QuestionsResponse;
 import org.springframework.data.annotation.Id;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -19,15 +20,21 @@ public class Card {
     private Map<AttributesEnum, Integer> attributes;
     private List<QuestionsResponse> prompt;
     private String userId;
+    private Boolean status;
+    private LocalDateTime datCreation;
+    private LocalDateTime datUpdate;
 
-    public Card(String id, String cardHash, String name, String description, Map<AttributesEnum, Integer> attributes, List<QuestionsResponse> prompt, String userId){
+    public Card(String id, String cardHash, String name, String description, Map<AttributesEnum, Integer> attributes, List<QuestionsResponse> prompt, String userId, Boolean status, LocalDateTime datCreation, LocalDateTime datUpdate) {
         this.id = id;
-        this.name = name;
         this.cardHash = cardHash;
+        this.name = name;
         this.description = description;
         this.attributes = attributes;
         this.prompt = prompt;
         this.userId = userId;
+        this.status = status;
+        this.datCreation = datCreation;
+        this.datUpdate = datUpdate;
     }
 
     public Card(){}
@@ -88,6 +95,30 @@ public class Card {
         this.prompt = prompt;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getDatCreation() {
+        return datCreation;
+    }
+
+    public void setDatCreation(LocalDateTime datCreation) {
+        this.datCreation = datCreation;
+    }
+
+    public LocalDateTime getDatUpdate() {
+        return datUpdate;
+    }
+
+    public void setDatUpdate(LocalDateTime datUpdate) {
+        this.datUpdate = datUpdate;
+    }
+
     public Card toCard(CardEntity cardEntity){
         return new Card(
                 cardEntity.getId(),
@@ -96,7 +127,10 @@ public class Card {
                 cardEntity.getDescription(),
                 cardEntity.getAttributes(),
                 cardEntity.getPrompt(),
-                cardEntity.getUserId()
+                cardEntity.getUserId(),
+                cardEntity.getStatus(),
+                cardEntity.getDatCreation(),
+                cardEntity.getDatUpdate()
         );
     }
 
@@ -108,7 +142,10 @@ public class Card {
                 this.description,
                 this.attributes,
                 this.prompt,
-                this.userId
+                this.userId,
+                this.status,
+                this.datCreation,
+                this.datUpdate
         );
     }
 }

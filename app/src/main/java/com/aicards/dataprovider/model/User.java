@@ -3,18 +3,22 @@ package com.aicards.dataprovider.model;
 
 import com.aicards.entity.UserEntity;
 
+import java.time.LocalDate;
+
 public class User {
 
     private String nome;
     private String sobrenome;
     private String idade;
     private String userId;
+    private LocalDate datCreation;
 
-    public User(String nome, String sobrenome, String idade, String userId){
+    public User(String nome, String sobrenome, String idade, String userId, LocalDate datCreation) {
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.idade = idade;
         this.userId = userId;
+        this.datCreation = datCreation;
     }
 
     public User(){
@@ -52,12 +56,21 @@ public class User {
         this.userId = userId;
     }
 
+    public LocalDate getDatCreation() {
+        return datCreation;
+    }
+
+    public void setDatCreation(LocalDate datCreation) {
+        this.datCreation = datCreation;
+    }
+
     public UserEntity toEntity(){
         return new UserEntity(
                 this.nome,
                 this.sobrenome,
                 this.idade,
-                this.userId
+                this.userId,
+                this.datCreation
         );
     }
 
@@ -66,7 +79,8 @@ public class User {
                 entity.getNome(),
                 entity.getSobrenome(),
                 entity.getIdade(),
-                entity.getUserId()
+                entity.getUserId(),
+                entity.getDatCreation()
         );
     }
 }
