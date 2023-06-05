@@ -1,13 +1,21 @@
 package com.aicards.entity.vo;
 
 public class ChoiceVO {
-    private String text;
+    private MessageVO message;
 
-    public String getText() {
-        return text;
+    public ChoiceVO(MessageVO message) {
+        this.message = message;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public ChoiceVO(){
+
+    }
+
+    public MessageVO getMessage() {
+        return message;
+    }
+
+    public void setMessage(MessageVO message) {
+        this.message = message;
     }
 }

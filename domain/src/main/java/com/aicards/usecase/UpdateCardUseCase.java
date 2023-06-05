@@ -17,7 +17,7 @@ public class UpdateCardUseCase {
 
     public CardEntity updateCardWithText(String cardHash, String name, String description) throws Exception {
         CardEntity card = cardDataProvider.findByCardHash(cardHash);
-        card.setName(name);
+        card.setName("Nome da carta");
         card.setDescription(description);
         card.setStatus(true);
         card.setDatUpdate(LocalDateTime.now());
