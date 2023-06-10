@@ -24,5 +24,13 @@ public class UpdateCardUseCase {
         return cardDataProvider.updateCard(card);
     }
 
+    public CardEntity updateCardWithImage(String cardHash, String image) throws Exception{
+        CardEntity card = cardDataProvider.findByCardHash(cardHash);
+        //settar image e status
+        System.out.println("update image");
+        System.out.println("update status");
+        card.setDatUpdate(LocalDateTime.now());
+        return cardDataProvider.updateCard(card);
+    }
 
 }
