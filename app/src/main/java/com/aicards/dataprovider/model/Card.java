@@ -4,6 +4,7 @@ package com.aicards.dataprovider.model;
 import com.aicards.entity.CardEntity;
 import com.aicards.entity.vo.AttributesEnum;
 import com.aicards.entity.vo.QuestionsResponse;
+import com.aicards.entity.vo.StatusEnum;
 import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
@@ -20,11 +21,11 @@ public class Card {
     private Map<AttributesEnum, Integer> attributes;
     private List<QuestionsResponse> prompt;
     private String userId;
-    private Boolean status;
+    private StatusEnum status;
     private LocalDateTime datCreation;
     private LocalDateTime datUpdate;
 
-    public Card(String id, String cardHash, String name, String description, Map<AttributesEnum, Integer> attributes, List<QuestionsResponse> prompt, String userId, Boolean status, LocalDateTime datCreation, LocalDateTime datUpdate) {
+    public Card(String id, String cardHash, String name, String description, Map<AttributesEnum, Integer> attributes, List<QuestionsResponse> prompt, String userId, StatusEnum status, LocalDateTime datCreation, LocalDateTime datUpdate) {
         this.id = id;
         this.cardHash = cardHash;
         this.name = name;
@@ -95,11 +96,11 @@ public class Card {
         this.prompt = prompt;
     }
 
-    public Boolean getStatus() {
+    public StatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(StatusEnum status) {
         this.status = status;
     }
 
