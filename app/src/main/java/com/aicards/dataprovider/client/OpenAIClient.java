@@ -27,6 +27,7 @@ public class OpenAIClient implements OpenAPIClientProvider {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(token);
         List<MessageVO> messages = new ArrayList<>();
+        messages.add(new MessageVO("system", "O usuário irá mandar uma sequência de perguntas e respostas feitas em uma entrevista, você deve criar a biografia de um personagem utilizando os dados. Finalize a biografia em menos de 110 palavras."));
         messages.add(new MessageVO("user", prompt));
 
         PromptRequest promptRequest = new PromptRequest(
