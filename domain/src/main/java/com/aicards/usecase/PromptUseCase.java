@@ -9,7 +9,7 @@ import java.util.List;
 public class PromptUseCase {
 
     public String createPrompt(List<QuestionsResponse> vo) {
-        StringBuilder prompt = new StringBuilder("Crie a Biografia de um personagem com as seguintes predefinições: ");
+        StringBuilder prompt = new StringBuilder();
 
         for (QuestionsResponse questionsResponse : vo) {
             prompt

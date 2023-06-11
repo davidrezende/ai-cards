@@ -1,23 +1,33 @@
 package com.aicards.entity.vo;
 
+import java.util.List;
+
 public class PromptRequest {
 
     private String model;
-    private String prompt;
+    private List<MessageVO> messages;
     private Integer temperature;
     private Integer max_tokens;
     private Integer top_p;
     private Integer frequency_penalty;
     private Integer presence_penalty;
 
-    public PromptRequest(String model, String prompt, Integer temperature, Integer max_tokens, Integer top_p, Integer frequency_penalty, Integer presence_penalty) {
+    public PromptRequest(String model, List<MessageVO> messages, Integer temperature, Integer max_tokens, Integer top_p, Integer frequency_penalty, Integer presence_penalty) {
         this.model = model;
-        this.prompt = prompt;
+        this.messages = messages;
         this.temperature = temperature;
         this.max_tokens = max_tokens;
         this.top_p = top_p;
         this.frequency_penalty = frequency_penalty;
         this.presence_penalty = presence_penalty;
+    }
+
+    public List<MessageVO> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<MessageVO> messages) {
+        this.messages = messages;
     }
 
     public String getModel() {
@@ -26,14 +36,6 @@ public class PromptRequest {
 
     public void setModel(String model) {
         this.model = model;
-    }
-
-    public String getPrompt() {
-        return prompt;
-    }
-
-    public void setPrompt(String prompt) {
-        this.prompt = prompt;
     }
 
     public Integer getTemperature() {

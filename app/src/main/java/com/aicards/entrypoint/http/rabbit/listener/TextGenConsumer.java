@@ -27,7 +27,7 @@ public class TextGenConsumer {
             CardEntity cardUpdated = textGenUseCase.generateAndUpdateCard(message);
             channel.basicAck(tag, false);
         }catch (Exception e){
-            throw new Exception("Erro ao processar evento de geracao de texto.");
+            throw e;
         }
     }
 }
