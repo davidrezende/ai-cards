@@ -2,14 +2,14 @@ package com.aicards.entity.vo;
 
 import java.util.List;
 
-public class OpenAPIClientResponse {
+public class OpenAIClientResponse {
     private List<ChoiceVO> choices;
 
-    public OpenAPIClientResponse(List<ChoiceVO> choices) {
+    public OpenAIClientResponse(List<ChoiceVO> choices) {
         this.choices = choices;
     }
 
-    public OpenAPIClientResponse() {
+    public OpenAIClientResponse() {
     }
 
     public List<ChoiceVO> getChoices() {
