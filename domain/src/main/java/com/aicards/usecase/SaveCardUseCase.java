@@ -9,6 +9,7 @@ import com.aicards.entity.event.impl.TextGenEvent;
 import com.aicards.entity.vo.AttributesEnum;
 import com.aicards.entity.vo.CreateCardRequest;
 import com.aicards.entity.vo.QuestionsResponse;
+import com.aicards.entity.vo.StatusEnum;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -54,7 +55,7 @@ public class SaveCardUseCase {
                 attributes,
                 questionsPrompt,
                 userEntity.getUserId(),
-                false,
+                StatusEnum.PENDING,
                 LocalDateTime.now(),
                 null
         );
