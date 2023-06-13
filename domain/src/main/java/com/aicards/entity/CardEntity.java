@@ -2,6 +2,7 @@ package com.aicards.entity;
 
 
 import com.aicards.entity.vo.AttributesEnum;
+import com.aicards.entity.vo.ImageVO;
 import com.aicards.entity.vo.QuestionsResponse;
 import com.aicards.entity.vo.StatusEnum;
 
@@ -21,9 +22,10 @@ public class CardEntity {
     private StatusEnum status;
     private LocalDateTime datCreation;
     private LocalDateTime datUpdate;
+    private ImageVO image;
 
 
-    public CardEntity(String id, String cardHash, String name, String description, Map<AttributesEnum, Integer> attributes, List<QuestionsResponse> prompt, String userId, StatusEnum status, LocalDateTime datCreation, LocalDateTime datUpdate) {
+    public CardEntity(String id, String cardHash, String name, String description, Map<AttributesEnum, Integer> attributes, List<QuestionsResponse> prompt, String userId, StatusEnum status, LocalDateTime datCreation, LocalDateTime datUpdate, ImageVO image) {
         this.id = id;
         this.cardHash = cardHash;
         this.name = name;
@@ -34,6 +36,7 @@ public class CardEntity {
         this.status = status;
         this.datCreation = datCreation;
         this.datUpdate = datUpdate;
+        this.image = image;
     }
 
     public String getId() {
@@ -114,5 +117,13 @@ public class CardEntity {
 
     public void setDatUpdate(LocalDateTime datUpdate) {
         this.datUpdate = datUpdate;
+    }
+
+    public ImageVO getImage() {
+        return image;
+    }
+
+    public void setImage(ImageVO image) {
+        this.image = image;
     }
 }

@@ -4,8 +4,10 @@ import com.aicards.dataprovider.model.Card;
 import com.aicards.dataprovider.repository.CardRepository;
 import com.aicards.entity.CardEntity;
 import com.aicards.entity.vo.CreateCardRequest;
+import com.aicards.usecase.ImageGeneratorCardUseCase;
 import com.aicards.usecase.SaveCardUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,9 @@ public class CardController {
 
     @Autowired
     private SaveCardUseCase cardUseCase;
+
+    @Autowired
+    private ImageGeneratorCardUseCase imageGeneratorCardUseCase;
 
     @Autowired
     private CardRepository repository;
@@ -37,4 +42,8 @@ public class CardController {
         return repository.findByCardHash(cardHash);
     }
 
+    @PatchMapping("/{cardHash}/image/prompt")
+    public ResponseEntity<CardEntity> generateAndUpdateCardImage(@PathVariable String cardHash, @RequestBody String prompt) throws Exception {
+        return imageGeneratorCardUseCase.generateImageAndUpdateCard(cardHash, prompt);
+    }
 }

@@ -2,7 +2,9 @@ package com.aicards.usecase;
 
 import com.aicards.dataprovider.CardDataProvider;
 import com.aicards.entity.CardEntity;
+import com.aicards.entity.vo.ImageVO;
 import com.aicards.entity.vo.StatusEnum;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -29,13 +31,16 @@ public class UpdateCardUseCase {
         return cardDataProvider.updateCard(card);
 
     }
-    public CardEntity updateCardWithImage(String cardHash, String image) throws Exception{
+    public ResponseEntity<CardEntity> updateCardWithImage(String cardHash, String prompt, String replicateId) throws Exception{
         CardEntity card = cardDataProvider.findByCardHash(cardHash);
-        //settar image e status
-        System.out.println("update image");
-        System.out.println("update status");
+        card.setImage(new ImageVO(
+                replicateId,
+                null,
+                prompt
+        ));
+        card.setStatus(StatusEnum.PROCESSING_IMAGE);
         card.setDatUpdate(LocalDateTime.now());
-        return cardDataProvider.updateCard(card);
+        return ResponseEntity.ok(cardDataProvider.updateCard(card));
     }
 
 }

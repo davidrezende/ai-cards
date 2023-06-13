@@ -1,22 +1,24 @@
 package com.aicards.usecase;
 
+import com.aicards.dataprovider.ReplicateClientProvider;
 import com.aicards.entity.CardEntity;
-import com.aicards.entity.event.impl.ImageGenEvent;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ImageGeneratorCardUseCase {
 
     private final UpdateCardUseCase updateCardUseCase;
+    private final ReplicateClientProvider replicateClient;
 
-    public ImageGeneratorCardUseCase(UpdateCardUseCase updateCardUseCase) {
+    public ImageGeneratorCardUseCase(UpdateCardUseCase updateCardUseCase, ReplicateClientProvider replicateClientProvider) {
         this.updateCardUseCase = updateCardUseCase;
+        this.replicateClient = replicateClientProvider;
     }
 
-    public CardEntity generateAndUpdateCard(ImageGenEvent vo) throws Exception {
-        //chamar api para gerar img
-        String image = "*Image*";
-        System.out.println(image);
-        return updateCardUseCase.updateCardWithImage(vo.getCardHash(), image);
+    public ResponseEntity<CardEntity> generateImageAndUpdateCard(String cardHash, String prompt) throws Exception {
+        String replicateId = replicateClient.callReplicateAI(prompt);
+        System.out.println(replicateId);
+        return updateCardUseCase.updateCardWithImage(cardHash, prompt, replicateId);
     }
 }

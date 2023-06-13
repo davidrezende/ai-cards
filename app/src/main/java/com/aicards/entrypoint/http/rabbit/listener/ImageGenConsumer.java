@@ -24,7 +24,7 @@ public class ImageGenConsumer {
     public void receive(ImageGenEvent message, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) throws Exception {
         try{
             System.out.println("Message: " + message.toString());
-            CardEntity cardUpdated = imageGenUseCase.generateAndUpdateCard(message);
+            //CardEntity cardUpdated = imageGenUseCase.generateAndUpdateCard(message);
         } catch (Exception e) {
             throw new Exception("Erro ao processar evento de geracao de imagem.");
         }
