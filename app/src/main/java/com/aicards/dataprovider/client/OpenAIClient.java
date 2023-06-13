@@ -2,7 +2,7 @@ package com.aicards.dataprovider.client;
 
 import com.aicards.dataprovider.OpenAPIClientProvider;
 import com.aicards.entity.vo.MessageVO;
-import com.aicards.entity.vo.OpenAPIClientResponse;
+import com.aicards.entity.vo.OpenAIClientResponse;
 import com.aicards.entity.vo.PromptRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,7 +42,7 @@ public class OpenAIClient implements OpenAPIClientProvider {
         String requestBody = new ObjectMapper().writeValueAsString(promptRequest);
 
         HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
-        ResponseEntity<OpenAPIClientResponse> response = restTemplate.exchange(API_URL, HttpMethod.POST, requestEntity, OpenAPIClientResponse.class);
+        ResponseEntity<OpenAIClientResponse> response = restTemplate.exchange(API_URL, HttpMethod.POST, requestEntity, OpenAIClientResponse.class);
 
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody().getChoices().get(0).getMessage().getContent();
