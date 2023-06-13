@@ -29,6 +29,7 @@ public class ReplicateAIClient implements ReplicateClientProvider {
         ReplicateAIRequest request = new ReplicateAIRequest();
         request.setVersion("e5e1fd333a08c8035974a01dd42f799f1cca4625aec374643d716d9ae40cf2e4");
         request.setInput(new InputReplicateAIVO(prompt + ", clear facial features, fantasy concept art, intricate details, cinematic, majestic background, art by wlop, digital painting, smooth lighting, looking towards the viewer, global illumination –uplight –v 4, ultra-detailed, depth of field, Shutter Speed 1/1000, photoshoot, OpenGL-Shader’s, RTX, Anti-aliasing"));
+        request.setWebhook("https://localhost:8080");
 
         String requestBody = new ObjectMapper().writeValueAsString(request);
         System.out.println(requestBody);
@@ -42,5 +43,18 @@ public class ReplicateAIClient implements ReplicateClientProvider {
             System.out.println("Falha na requisição. Código de status: " + response.getStatusCodeValue());
         }
         return null;
+    }
+
+    @Override
+    public ResponseEntity<String> getPrediction(String id)  {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Token "+token);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        return restTemplate.exchange("https://api.replicate.com/v1/predictions/" + id,
+                HttpMethod.GET, requestEntity, String.class);
     }
 }
