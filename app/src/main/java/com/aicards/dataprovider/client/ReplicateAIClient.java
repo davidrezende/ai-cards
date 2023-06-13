@@ -1,7 +1,9 @@
 package com.aicards.dataprovider.client;
 
-import com.aicards.dataprovider.OpenAPIClientProvider;
-import com.aicards.entity.vo.*;
+import com.aicards.dataprovider.ReplicateClientProvider;
+import com.aicards.entity.vo.InputReplicateAIVO;
+import com.aicards.entity.vo.ReplicateAIRequest;
+import com.aicards.entity.vo.ReplicateAIResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,11 +11,8 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Component
-public class ReplicateAIClient implements OpenAPIClientProvider {
+public class ReplicateAIClient implements ReplicateClientProvider {
 
     @Value("${config.replicateai.token}")
     private String token;

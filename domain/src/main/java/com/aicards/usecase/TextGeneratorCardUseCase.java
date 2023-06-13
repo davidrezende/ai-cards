@@ -1,6 +1,6 @@
 package com.aicards.usecase;
 
-import com.aicards.dataprovider.OpenAPIClientProvider;
+import com.aicards.dataprovider.OpenAIClientProvider;
 import com.aicards.entity.CardEntity;
 import com.aicards.entity.event.impl.TextGenEvent;
 import org.springframework.stereotype.Service;
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 public class TextGeneratorCardUseCase {
 
     private final UpdateCardUseCase updateCardUseCase;
-    private final OpenAPIClientProvider openAIClient;
+    private final OpenAIClientProvider openAIClient;
 
-    public TextGeneratorCardUseCase(UpdateCardUseCase updateCardProvider, OpenAPIClientProvider openAIClient) {
+    public TextGeneratorCardUseCase(UpdateCardUseCase updateCardProvider, OpenAIClientProvider openAIClient) {
         this.updateCardUseCase = updateCardProvider;
         this.openAIClient = openAIClient;
     }

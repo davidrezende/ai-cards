@@ -1,6 +1,6 @@
 package com.aicards.dataprovider.client;
 
-import com.aicards.dataprovider.OpenAPIClientProvider;
+import com.aicards.dataprovider.OpenAIClientProvider;
 import com.aicards.entity.vo.MessageVO;
 import com.aicards.entity.vo.OpenAIClientResponse;
 import com.aicards.entity.vo.PromptRequest;
@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.*;
 
 @Component
-public class OpenAIClient implements OpenAPIClientProvider {
+public class OpenAIClient implements OpenAIClientProvider {
 
     @Value("${config.openai.token}")
     private String token;
