@@ -19,7 +19,7 @@ public class TestController {
 
     @GetMapping("/image/{prompt}")
     public String testImage(@PathVariable String prompt) throws JsonProcessingException {
-        return clientAIImage.callReplicateAI(prompt);
+        return clientAIImage.callReplicateAI(prompt, null);
     }
 
     @GetMapping("/{replicateId}")

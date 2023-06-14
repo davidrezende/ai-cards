@@ -17,8 +17,13 @@ public class ImageGeneratorCardUseCase {
     }
 
     public ResponseEntity<CardEntity> generateImageAndUpdateCard(String cardHash, String prompt) throws Exception {
-        String replicateId = replicateClient.callReplicateAI(prompt);
+        String replicateId = replicateClient.callReplicateAI(prompt, cardHash);
         System.out.println(replicateId);
-        return updateCardUseCase.updateCardWithImage(cardHash, prompt, replicateId);
+        return updateCardUseCase.updateCardWithReplicateId(cardHash, prompt, replicateId);
+    }
+
+    public ResponseEntity<CardEntity> convertAndUpdateCardImage(String imageUrl, String cardHash) throws Exception {
+        //converter para base64
+        return updateCardUseCase.updateCardWithImage(cardHash, imageUrl);
     }
 }

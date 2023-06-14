@@ -31,7 +31,7 @@ public class UpdateCardUseCase {
         return cardDataProvider.updateCard(card);
 
     }
-    public ResponseEntity<CardEntity> updateCardWithImage(String cardHash, String prompt, String replicateId) throws Exception{
+    public ResponseEntity<CardEntity> updateCardWithReplicateId(String cardHash, String prompt, String replicateId) throws Exception {
         CardEntity card = cardDataProvider.findByCardHash(cardHash);
         card.setImage(new ImageVO(
                 replicateId,
@@ -39,6 +39,18 @@ public class UpdateCardUseCase {
                 prompt
         ));
         card.setStatus(StatusEnum.PROCESSING_IMAGE);
+        card.setDatUpdate(LocalDateTime.now());
+        return ResponseEntity.ok(cardDataProvider.updateCard(card));
+    }
+
+    public ResponseEntity<CardEntity> updateCardWithImage(String cardHash, String image) throws Exception {
+        CardEntity card = cardDataProvider.findByCardHash(cardHash);
+        card.setImage(new ImageVO(
+                card.getImage().getIdReplicate(),
+                image,
+                card.getImage().getPrompt()
+        ));
+        card.setStatus(StatusEnum.IMAGE_CREATED);
         card.setDatUpdate(LocalDateTime.now());
         return ResponseEntity.ok(cardDataProvider.updateCard(card));
     }

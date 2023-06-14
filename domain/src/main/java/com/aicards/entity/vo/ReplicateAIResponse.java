@@ -1,23 +1,27 @@
 package com.aicards.entity.vo;
 
+import java.util.List;
+
 public class ReplicateAIResponse {
 
-    private String output;
+    private List<String> output;
     private String id;
-
-    public ReplicateAIResponse(String output, String id) {
-        this.output = output;
-        this.id = id;
-    }
+    private String status;
 
     public ReplicateAIResponse() {
     }
 
-    public String getOutput() {
+    public ReplicateAIResponse(List<String> output, String id, String status) {
+        this.output = output;
+        this.id = id;
+        this.status = status;
+    }
+
+    public List<String> getOutput() {
         return output;
     }
 
-    public void setOutput(String output) {
+    public void setOutput(List<String> output) {
         this.output = output;
     }
 
@@ -27,5 +31,13 @@ public class ReplicateAIResponse {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
