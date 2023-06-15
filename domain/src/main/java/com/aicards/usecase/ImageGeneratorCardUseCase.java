@@ -5,6 +5,12 @@ import com.aicards.entity.CardEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.net.URL;
+import java.util.Base64;
+
 @Service
 public class ImageGeneratorCardUseCase {
 
@@ -23,7 +29,15 @@ public class ImageGeneratorCardUseCase {
     }
 
     public ResponseEntity<CardEntity> convertAndUpdateCardImage(String imageUrl, String cardHash) throws Exception {
-        //converter para base64
-        return updateCardUseCase.updateCardWithImage(cardHash, imageUrl);
+        URL url = new URL(imageUrl);
+        BufferedImage image = ImageIO.read(url);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ImageIO.write(image, "jpg", bos );
+        byte [] data = bos.toByteArray();
+        image.flush();
+        bos.close();
+        String imageBase64 = Base64.getEncoder().encodeToString(data);
+
+        return updateCardUseCase.updateCardWithImage(cardHash, imageBase64);
     }
 }

@@ -43,11 +43,11 @@ public class UpdateCardUseCase {
         return ResponseEntity.ok(cardDataProvider.updateCard(card));
     }
 
-    public ResponseEntity<CardEntity> updateCardWithImage(String cardHash, String image) throws Exception {
+    public ResponseEntity<CardEntity> updateCardWithImage(String cardHash, String imageBase64) throws Exception {
         CardEntity card = cardDataProvider.findByCardHash(cardHash);
         card.setImage(new ImageVO(
                 card.getImage().getIdReplicate(),
-                image,
+                imageBase64,
                 card.getImage().getPrompt()
         ));
         card.setStatus(StatusEnum.IMAGE_CREATED);

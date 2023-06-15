@@ -9,6 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Base64;
+
 @RestController
 @RequestMapping("/v1/test")
 public class TestController {
@@ -25,5 +32,18 @@ public class TestController {
     @GetMapping("/{replicateId}")
     public ResponseEntity<String> testGetImage(@PathVariable String replicateId) {
         return clientAIImage.getPrediction(replicateId);
+    }
+
+    @GetMapping("/url")
+    public String testeConvertToBase64() throws IOException {
+        URL url = new URL("");
+        BufferedImage image = ImageIO.read(url);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ImageIO.write(image, "jpg", bos );
+        byte [] data = bos.toByteArray();
+        image.flush();
+        bos.close();
+        //byte [] fileContent = FileUtils.readFileToByteArray(file);
+        return Base64.getEncoder().encodeToString(data);
     }
 }
