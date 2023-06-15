@@ -3,10 +3,12 @@ package com.aicards.usecase;
 import com.aicards.dataprovider.CardDataProvider;
 import com.aicards.entity.CardEntity;
 import com.aicards.entity.vo.ImageVO;
+import com.aicards.entity.vo.ReplicateAIResponse;
 import com.aicards.entity.vo.StatusEnum;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Service
@@ -36,20 +38,26 @@ public class UpdateCardUseCase {
         card.setImage(new ImageVO(
                 replicateId,
                 null,
-                prompt
+                null,
+                null,
+                prompt,
+                null
         ));
         card.setStatus(StatusEnum.PROCESSING_IMAGE);
         card.setDatUpdate(LocalDateTime.now());
         return ResponseEntity.ok(cardDataProvider.updateCard(card));
     }
 
-    public ResponseEntity<CardEntity> updateCardWithImage(String cardHash, String imageBase64) throws Exception {
+    public ResponseEntity<CardEntity> updateCardWithImage(String cardHash, String imageBase64, ReplicateAIResponse replicateResponse) throws Exception {
         CardEntity card = cardDataProvider.findByCardHash(cardHash);
         card.setImage(new ImageVO(
                 card.getImage().getIdReplicate(),
-                imageBase64,
-                card.getImage().getPrompt()
-        ));
+                Instant.parse(replicateResponse.getCreated_at()),
+                Instant.parse(replicateResponse.getStarted_at()),
+                Instant.parse(replicateResponse.getCompleted_at()),
+                card.getImage().getPrompt(),
+                imageBase64
+                ));
         card.setStatus(StatusEnum.IMAGE_CREATED);
         card.setDatUpdate(LocalDateTime.now());
         return ResponseEntity.ok(cardDataProvider.updateCard(card));

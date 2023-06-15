@@ -50,6 +50,6 @@ public class CardController {
 
     @PostMapping("/replicate/image")
     public ResponseEntity<CardEntity> webhook(@RequestBody ReplicateAIResponse replicateAIResponse, @RequestParam("cardHash") String cardHash) throws Exception {
-        return imageGeneratorCardUseCase.convertAndUpdateCardImage(replicateAIResponse.getOutput().get(0),cardHash);
+        return imageGeneratorCardUseCase.convertAndUpdateCardImage(replicateAIResponse,cardHash);
     }
 }

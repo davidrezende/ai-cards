@@ -6,10 +6,7 @@ import com.aicards.entity.CardEntity;
 import com.aicards.entity.UserEntity;
 import com.aicards.entity.event.EventVO;
 import com.aicards.entity.event.impl.TextGenEvent;
-import com.aicards.entity.vo.AttributesEnum;
-import com.aicards.entity.vo.CreateCardRequest;
-import com.aicards.entity.vo.QuestionsResponse;
-import com.aicards.entity.vo.StatusEnum;
+import com.aicards.entity.vo.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -65,7 +62,7 @@ public class SaveCardUseCase {
         );
 
         CardEntity card = cardDataProvider.saveCard(carta);
-        String prompt = promptUseCase.createPrompt(questionsPrompt);
+        List<MessageVO> prompt = promptUseCase.createPrompt(questionsPrompt);
 
         if(card != null){
             EventVO textEvent = new TextGenEvent(prompt, card.getCardHash());

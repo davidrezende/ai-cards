@@ -5,5 +5,4 @@ import org.springframework.http.ResponseEntity;
 
 public interface ReplicateClientProvider {
     String callReplicateAI(String prompt, String cardHash) throws JsonProcessingException;
-    ResponseEntity<String> getPrediction(String id);
 }

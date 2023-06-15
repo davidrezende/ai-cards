@@ -2,6 +2,7 @@ package com.aicards.usecase;
 
 import com.aicards.dataprovider.ReplicateClientProvider;
 import com.aicards.entity.CardEntity;
+import com.aicards.entity.vo.ReplicateAIResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -15,21 +16,24 @@ import java.util.Base64;
 public class ImageGeneratorCardUseCase {
 
     private final UpdateCardUseCase updateCardUseCase;
+    private final PromptUseCase promptUseCase;
     private final ReplicateClientProvider replicateClient;
 
-    public ImageGeneratorCardUseCase(UpdateCardUseCase updateCardUseCase, ReplicateClientProvider replicateClientProvider) {
+    public ImageGeneratorCardUseCase(UpdateCardUseCase updateCardUseCase, PromptUseCase promptUseCase, ReplicateClientProvider replicateClientProvider) {
         this.updateCardUseCase = updateCardUseCase;
+        this.promptUseCase = promptUseCase;
         this.replicateClient = replicateClientProvider;
     }
 
-    public ResponseEntity<CardEntity> generateImageAndUpdateCard(String cardHash, String prompt) throws Exception {
+    public ResponseEntity<CardEntity> generateImageAndUpdateCard(String cardHash, String userPrompt) throws Exception {
+        String prompt = promptUseCase.createImagePrompt(userPrompt);
         String replicateId = replicateClient.callReplicateAI(prompt, cardHash);
-        System.out.println(replicateId);
+        System.out.println("Replicate ID: " + replicateId);
         return updateCardUseCase.updateCardWithReplicateId(cardHash, prompt, replicateId);
     }
 
-    public ResponseEntity<CardEntity> convertAndUpdateCardImage(String imageUrl, String cardHash) throws Exception {
-        URL url = new URL(imageUrl);
+    public ResponseEntity<CardEntity> convertAndUpdateCardImage(ReplicateAIResponse replicateResponse, String cardHash) throws Exception {
+        URL url = new URL(replicateResponse.getOutput().get(0));
         BufferedImage image = ImageIO.read(url);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ImageIO.write(image, "jpg", bos );
@@ -38,6 +42,6 @@ public class ImageGeneratorCardUseCase {
         bos.close();
         String imageBase64 = Base64.getEncoder().encodeToString(data);
 
-        return updateCardUseCase.updateCardWithImage(cardHash, imageBase64);
+        return updateCardUseCase.updateCardWithImage(cardHash, imageBase64, replicateResponse);
     }
 }
