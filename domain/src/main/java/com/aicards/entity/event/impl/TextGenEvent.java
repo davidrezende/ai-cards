@@ -2,6 +2,9 @@ package com.aicards.entity.event.impl;
 
 
 import com.aicards.entity.event.EventVO;
+import com.aicards.entity.vo.MessageVO;
+
+import java.util.List;
 
 public class TextGenEvent implements EventVO {
 
@@ -10,12 +13,12 @@ public class TextGenEvent implements EventVO {
 
     }
 
-    public TextGenEvent(String prompt, String cardHash) {
+    public TextGenEvent(List<MessageVO> prompt, String cardHash) {
         this.prompt = prompt;
         this.cardHash = cardHash;
     }
 
-    private String prompt;
+    private List<MessageVO> prompt;
     private String cardHash;
 
     @Override
@@ -26,11 +29,11 @@ public class TextGenEvent implements EventVO {
                 '}';
     }
 
-    public String getPrompt() {
+    public List<MessageVO> getPrompt() {
         return prompt;
     }
 
-    public void setPrompt(String prompt) {
+    public void setPrompt(List<MessageVO> prompt) {
         this.prompt = prompt;
     }
 

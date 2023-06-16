@@ -2,7 +2,10 @@ package com.aicards.usecase;
 
 import com.aicards.dataprovider.CardDataProvider;
 import com.aicards.entity.CardEntity;
+import com.aicards.entity.vo.ImageVO;
+import com.aicards.entity.vo.ReplicateAIResponse;
 import com.aicards.entity.vo.StatusEnum;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,22 +23,39 @@ public class UpdateCardUseCase {
         CardEntity card = cardDataProvider.findByCardHash(cardHash);
         card.setName("Nome da carta");
         card.setDescription(description);
-        if ((card.getStatus().equals(StatusEnum.IMAGE_CREATED))) {
-            card.setStatus(StatusEnum.CREATED);
-        } else {
-            card.setStatus(StatusEnum.TEXT_CREATED);
-        }
+        card.setStatus(StatusEnum.TEXT_CREATED);
         card.setDatUpdate(LocalDateTime.now());
         return cardDataProvider.updateCard(card);
 
     }
-    public CardEntity updateCardWithImage(String cardHash, String image) throws Exception{
+    public ResponseEntity<CardEntity> updateCardWithReplicateId(String cardHash, String prompt, String replicateId) throws Exception {
         CardEntity card = cardDataProvider.findByCardHash(cardHash);
-        //settar image e status
-        System.out.println("update image");
-        System.out.println("update status");
+        card.setImage(new ImageVO(
+                replicateId,
+                null,
+                null,
+                null,
+                prompt,
+                null
+        ));
+        card.setStatus(StatusEnum.PROCESSING_IMAGE);
         card.setDatUpdate(LocalDateTime.now());
-        return cardDataProvider.updateCard(card);
+        return ResponseEntity.ok(cardDataProvider.updateCard(card));
+    }
+
+    public ResponseEntity<CardEntity> updateCardWithImage(String cardHash, String imageBase64, ReplicateAIResponse replicateResponse) throws Exception {
+        CardEntity card = cardDataProvider.findByCardHash(cardHash);
+        card.setImage(new ImageVO(
+                card.getImage().getIdReplicate(),
+                replicateResponse.getCreated_at(),
+                replicateResponse.getStarted_at(),
+                replicateResponse.getCompleted_at(),
+                card.getImage().getPrompt(),
+                imageBase64
+                ));
+        card.setStatus(StatusEnum.CREATED);
+        card.setDatUpdate(LocalDateTime.now());
+        return ResponseEntity.ok(cardDataProvider.updateCard(card));
     }
 
 }

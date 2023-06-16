@@ -15,3 +15,5 @@ config:
       default-queue: ""
   openai:
     token: ""
+  replicateai:
+    token: ""

@@ -1,7 +1,9 @@
 package com.aicards.dataprovider.client;
 
-import com.aicards.dataprovider.OpenAPIClientProvider;
-import com.aicards.entity.vo.*;
+import com.aicards.dataprovider.ReplicateClientProvider;
+import com.aicards.entity.vo.InputReplicateAIVO;
+import com.aicards.entity.vo.ReplicateAIRequest;
+import com.aicards.entity.vo.ReplicateAIResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,18 +11,15 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Component
-public class ReplicateAIClient implements OpenAPIClientProvider {
+public class ReplicateAIClient implements ReplicateClientProvider {
 
     @Value("${config.replicateai.token}")
     private String token;
     private static final String API_URL = "https://api.replicate.com/v1/predictions";
 
     @Override
-    public String callReplicateAI(String prompt) throws JsonProcessingException {
+    public String callReplicateAI(String prompt, String cardHash) throws JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
 
@@ -29,7 +28,8 @@ public class ReplicateAIClient implements OpenAPIClientProvider {
 
         ReplicateAIRequest request = new ReplicateAIRequest();
         request.setVersion("e5e1fd333a08c8035974a01dd42f799f1cca4625aec374643d716d9ae40cf2e4");
-        request.setInput(new InputReplicateAIVO(prompt + ", clear facial features, fantasy concept art, intricate details, cinematic, majestic background, art by wlop, digital painting, smooth lighting, looking towards the viewer, global illumination –uplight –v 4, ultra-detailed, depth of field, Shutter Speed 1/1000, photoshoot, OpenGL-Shader’s, RTX, Anti-aliasing"));
+        request.setInput(new InputReplicateAIVO(prompt));
+        request.setWebhook("" + cardHash);
 
         String requestBody = new ObjectMapper().writeValueAsString(request);
         System.out.println(requestBody);

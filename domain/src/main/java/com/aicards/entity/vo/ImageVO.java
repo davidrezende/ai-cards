@@ -1,50 +1,44 @@
 package com.aicards.entity.vo;
 
-import java.util.List;
-
-public class ReplicateAIResponse {
-
-    private List<String> output;
-    private String id;
-    private String status;
+public class ImageVO {
+    private String idReplicate;
     private String created_at;
     private String started_at;
     private String completed_at;
+    private String prompt;
+    private String image;
 
-    public ReplicateAIResponse() {
-    }
-
-    public ReplicateAIResponse(List<String> output, String id, String status, String created_at, String started_at, String completed_at) {
-        this.output = output;
-        this.id = id;
-        this.status = status;
+    public ImageVO(String idReplicate, String created_at, String started_at, String completed_at, String prompt, String image) {
+        this.idReplicate = idReplicate;
         this.created_at = created_at;
         this.started_at = started_at;
         this.completed_at = completed_at;
+        this.prompt = prompt;
+        this.image = image;
     }
 
-    public List<String> getOutput() {
-        return output;
+    public String getIdReplicate() {
+        return idReplicate;
     }
 
-    public void setOutput(List<String> output) {
-        this.output = output;
+    public void setIdReplicate(String idReplicate) {
+        this.idReplicate = idReplicate;
     }
 
-    public String getId() {
-        return id;
+    public String getImage() {
+        return image;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public String getStatus() {
-        return status;
+    public String getPrompt() {
+        return prompt;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setPrompt(String prompt) {
+        this.prompt = prompt;
     }
 
     public String getCreated_at() {
