@@ -8,7 +8,6 @@ import com.aicards.entity.vo.StatusEnum;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Service
@@ -24,11 +23,7 @@ public class UpdateCardUseCase {
         CardEntity card = cardDataProvider.findByCardHash(cardHash);
         card.setName("Nome da carta");
         card.setDescription(description);
-        if ((card.getStatus().equals(StatusEnum.IMAGE_CREATED))) {
-            card.setStatus(StatusEnum.CREATED);
-        } else {
-            card.setStatus(StatusEnum.TEXT_CREATED);
-        }
+        card.setStatus(StatusEnum.TEXT_CREATED);
         card.setDatUpdate(LocalDateTime.now());
         return cardDataProvider.updateCard(card);
 
@@ -52,13 +47,13 @@ public class UpdateCardUseCase {
         CardEntity card = cardDataProvider.findByCardHash(cardHash);
         card.setImage(new ImageVO(
                 card.getImage().getIdReplicate(),
-                Instant.parse(replicateResponse.getCreated_at()),
-                Instant.parse(replicateResponse.getStarted_at()),
-                Instant.parse(replicateResponse.getCompleted_at()),
+                replicateResponse.getCreated_at(),
+                replicateResponse.getStarted_at(),
+                replicateResponse.getCompleted_at(),
                 card.getImage().getPrompt(),
                 imageBase64
                 ));
-        card.setStatus(StatusEnum.IMAGE_CREATED);
+        card.setStatus(StatusEnum.CREATED);
         card.setDatUpdate(LocalDateTime.now());
         return ResponseEntity.ok(cardDataProvider.updateCard(card));
     }
