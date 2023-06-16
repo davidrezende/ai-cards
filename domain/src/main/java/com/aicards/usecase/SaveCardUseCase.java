@@ -5,12 +5,8 @@ import com.aicards.dataprovider.EventProducerProvider;
 import com.aicards.entity.CardEntity;
 import com.aicards.entity.UserEntity;
 import com.aicards.entity.event.EventVO;
-import com.aicards.entity.event.impl.ImageGenEvent;
 import com.aicards.entity.event.impl.TextGenEvent;
-import com.aicards.entity.vo.AttributesEnum;
-import com.aicards.entity.vo.CreateCardRequest;
-import com.aicards.entity.vo.QuestionsResponse;
-import com.aicards.entity.vo.StatusEnum;
+import com.aicards.entity.vo.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -61,20 +57,17 @@ public class SaveCardUseCase {
                 userEntity.getUserId(),
                 StatusEnum.PENDING,
                 LocalDateTime.now(),
+                null,
                 null
         );
 
         CardEntity card = cardDataProvider.saveCard(carta);
-        String prompt = promptUseCase.createPrompt(questionsPrompt);
+        List<MessageVO> prompt = promptUseCase.createPrompt(questionsPrompt);
 
         if(card != null){
             EventVO textEvent = new TextGenEvent(prompt, card.getCardHash());
             eventProducerProvider.sendMessage(textGeneratorQueueName, textEvent);
             System.out.println("Evento enviado!");
-
-            EventVO imageEvent = new ImageGenEvent("image prompt", card.getCardHash());
-            eventProducerProvider.sendMessage(imageGeneratorQueueName, imageEvent);
-            System.out.println("Image event enviado!");
 
             return card;
         }
