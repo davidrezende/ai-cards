@@ -27,7 +27,7 @@ public class ReplicateAIClient implements ReplicateClientProvider {
         headers.set("Authorization", "Token "+token);
 
         ReplicateAIRequest request = new ReplicateAIRequest();
-        request.setVersion("e5e1fd333a08c8035974a01dd42f799f1cca4625aec374643d716d9ae40cf2e4");
+        request.setVersion("db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf");
         request.setInput(new InputReplicateAIVO(prompt));
         request.setWebhook("" + cardHash);
 
