@@ -2,6 +2,7 @@ package com.aicards.usecase;
 
 import com.aicards.dataprovider.ReplicateClientProvider;
 import com.aicards.entity.CardEntity;
+import com.aicards.entity.vo.GenerateImageRequest;
 import com.aicards.entity.vo.ReplicateAIResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,11 +26,11 @@ public class ImageGeneratorCardUseCase {
         this.replicateClient = replicateClientProvider;
     }
 
-    public ResponseEntity<CardEntity> generateImageAndUpdateCard(String cardHash, String userPrompt) throws Exception {
-        String prompt = promptUseCase.createImagePrompt(userPrompt);
-        String replicateId = replicateClient.callReplicateAI(prompt, cardHash);
+    public ResponseEntity<CardEntity> generateImageAndUpdateCard(GenerateImageRequest request) throws Exception {
+        String prompt = promptUseCase.createImagePrompt(request.getPrompt());
+        String replicateId = replicateClient.callReplicateAI(prompt, request.getCardHash());
         System.out.println("Replicate ID: " + replicateId);
-        return updateCardUseCase.updateCardWithReplicateId(cardHash, prompt, replicateId);
+        return updateCardUseCase.updateCardWithReplicateId(request.getCardHash(), prompt, replicateId);
     }
 
     public ResponseEntity<CardEntity> convertAndUpdateCardImage(ReplicateAIResponse replicateResponse, String cardHash) throws Exception {

@@ -5,6 +5,7 @@ import com.aicards.entity.CardEntity;
 import com.aicards.entity.vo.ImageVO;
 import com.aicards.entity.vo.ReplicateAIResponse;
 import com.aicards.entity.vo.StatusEnum;
+import com.aicards.entity.vo.UpdateNameRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +57,12 @@ public class UpdateCardUseCase {
         card.setStatus(StatusEnum.CREATED);
         card.setDatUpdate(LocalDateTime.now());
         return ResponseEntity.ok(cardDataProvider.updateCard(card));
+    }
+
+    public ResponseEntity<String> updateCardName(UpdateNameRequest updateNameRequest) throws Exception {
+        CardEntity card = cardDataProvider.findByCardHash(updateNameRequest.getCardHash());
+        card.setName(updateNameRequest.getName());
+        return ResponseEntity.ok(cardDataProvider.updateCard(card).getName());
     }
 
 }
