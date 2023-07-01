@@ -16,7 +16,12 @@ public class ReplicateAIClient implements ReplicateClientProvider {
 
     @Value("${config.replicateai.token}")
     private String token;
-    private static final String API_URL = "https://api.replicate.com/v1/predictions";
+
+    @Value("${config.replicateai.api_url}")
+    private String API_URL;
+
+    @Value("${config.replicateai.webhook}")
+    private String webhook;
 
     @Override
     public String callReplicateAI(String prompt, String cardHash) throws JsonProcessingException {
@@ -29,7 +34,7 @@ public class ReplicateAIClient implements ReplicateClientProvider {
         ReplicateAIRequest request = new ReplicateAIRequest();
         request.setVersion("db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf");
         request.setInput(new InputReplicateAIVO(prompt));
-        request.setWebhook("" + cardHash);
+        request.setWebhook(webhook + "/v1/card/replicate/image?cardHash=" + cardHash);
 
         String requestBody = new ObjectMapper().writeValueAsString(request);
         System.out.println(requestBody);

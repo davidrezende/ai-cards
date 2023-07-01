@@ -17,3 +17,5 @@ config:
     token: ""
   replicateai:
     token: ""
+    webhook: ""
+    api_url: "https://api.replicate.com/v1/predictions"
